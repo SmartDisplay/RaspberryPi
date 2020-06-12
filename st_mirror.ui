@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="weather">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>70</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>weather</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="now_temperature">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>20</y>
+     <width>70</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>현재 기온</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="now_temperature_maxmin">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>50</y>
+     <width>70</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>최저 최고</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="mask">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>10</y>
+     <width>70</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>마스크</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="dust">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>20</y>
+     <width>70</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>미세먼지</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="dust_ui">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>50</y>
+     <width>70</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>초미세먼지</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="one">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>20</y>
+     <width>130</width>
+     <height>700</height>
+    </rect>
+   </property>
+
+   <property name="text">
+    <string>첫번째</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="two">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>20</y>
+     <width>130</width>
+     <height>700</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>두번째</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="three">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>20</y>
+     <width>130</width>
+     <height>700</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>세번째</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="four">
+   <property name="geometry">
+    <rect>
+     <x>810</x>
+     <y>20</y>
+     <width>130</width>
+     <height>700</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>네번째</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="five">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>20</y>
+     <width>130</width>
+     <height>700</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>다섯번째</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="dateEdit">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>700</y>
+     <width>130</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="dateEdit_2">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>700</y>
+     <width>130</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="dateEdit_3">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>700</y>
+     <width>130</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="dateEdit_4">
+   <property name="geometry">
+    <rect>
+     <x>810</x>
+     <y>700</y>
+     <width>130</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="dateEdit_5">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>700</y>
+     <width>130</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QWidget" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>210</y>
+     <width>120</width>
+     <height>80</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
