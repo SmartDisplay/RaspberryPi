@@ -10,6 +10,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.uic.properties import QtGui
+from PyQt5.uic.uiparser import QtWidgets
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType("st_mirror.ui")
 
@@ -20,11 +21,43 @@ Ui_MainWindow, QtBaseClass = uic.loadUiType("st_mirror.ui")
 class MyWindow(QMainWindow):
     def list_fun(list):
         lists = list
+
+    def showMessageBox(self):
+        msgbox = QtWidgets.QMessageBox(self)
+        msgbox.question(self, 'MessageBox title', 'Here comes message',
+                        QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+    def weatherimage(self):
+        URL = 'https://smartmirror.sewingfactory.shop/api/v1/getToday'
+        response = requests.get(URL)
+        print(response.content)
+        json_data = json.loads(response.content)
+        rain = json_data['rain']
+        snow = json_data['snow']
+        maxTemperature = json_data['maxTemperature']
+        minTemperature = json_data['minTemperature']
+        self.ui.weather = QLabel(self)
+        if (rain is False and snow is False):
+            pixmap = QPixmap("sun.png")
+            #self.ui.weather.resize(250,250)
+            self.ui.weather.setPixmap(QPixmap(pixmap))
+            print("해")
+        elif (rain is True and snow is False):
+            pixmap = QPixmap("rain.png")
+            self.ui.weather.setPixmap(QPixmap(pixmap))
+            print("비")
+        elif (rain is False and snow is True):
+            pixmap = QPixmap("snow.png")
+            self.ui.weather.setPixmap(QPixmap(pixmap))
+            print("눈")
+        else:
+            print("모른닷")
     def __init__(self):
 
         super(MyWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        self.weatherimage()
 
         userBlueToothAddr = "userBlueToothAddr"
         monitorToken = "monitorToken"
@@ -47,13 +80,20 @@ class MyWindow(QMainWindow):
             print(v[1])
             eh = v[1]
         fr.close()
+
+
+        #토큰값있으면 실행 ㄴㄴ
+        #경고창
+        self.showMessageBox
+
         params = """
                {
                    "monitorToken" : """+ "\"" + eh +"\""+ """
                    }
                """
         url = 'https://smartmirror.sewingfactory.shop/api/v1/getMonitorsUserId'
-        #토큰값있으면 실행 ㄴㄴ
+
+
         print(params)
 
         #원래라면 블루투스 연결하는 것을 받아와서 변수값에 넣어줘야 됨
@@ -78,6 +118,7 @@ class MyWindow(QMainWindow):
         print(a)
         print(a.__len__())
         print(a[0]['userName'])
+
         #print(url)
         for aa in range(a.__len__()):
             urlString = a[aa]['imageUrl']
@@ -102,8 +143,8 @@ class MyWindow(QMainWindow):
                 self.ui.dateEdit_5.setText(createdDate[0:8])
 
 
-        self.ui.weather.setText(str(response.status_code)) #이렇게 변경
-        self.ui.now_temperature.setText(str(response.status_code)) #이렇게 변경
+        #self.ui.weather.setText(str(response.status_code)) #이렇게 변경
+        #self.ui.now_temperature.setText(str(response.status_code)) #이렇게 변경
 
 if __name__ == "__main__":
             app = QApplication(sys.argv)
