@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic, QtCore
 from PyQt5.uic.properties import QtGui
 from time import sleep
-#import predict_point
+import predict_point
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType("st_mirror.ui")
 
@@ -229,16 +229,22 @@ class MyWindow(QMainWindow):
                         self.ui.dateEdit_5.setText(createdDate[0:8])
                         self.ui.point_5.setText(points)
                 self.weatherimage()
-            sleep(10)
+            sleep(20)
 
     def csvfile_(self):
-        while True:
-            #predict_point.csvfile()
-            pixmap = QPixmap("foo.png")
-            pixmap = pixmap.scaledToWidth(150)
-            pixmap = pixmap.scaledToHeight(150)
-            self.ui.grape1.setPixmap(pixmap)
-            sleep(20)
+        self.ui.predict.setText(predict_point.will())
+        #predict_point.csvfile()
+        pixmap = QPixmap("foo.png")
+        pixmap = pixmap.scaledToWidth(200)
+        pixmap = pixmap.scaledToHeight(150)
+        self.ui.grape1.setPixmap(pixmap)
+
+    def csvfile__(self):
+       # predict_point.weather_history_date_get_grape()
+        pixmap = QPixmap("grape.png")
+        pixmap = pixmap.scaledToWidth(200)
+        pixmap = pixmap.scaledToHeight(150)
+        self.ui.grape2.setPixmap(pixmap)
 
     def reset(self):
 
@@ -270,7 +276,6 @@ class MyWindow(QMainWindow):
         super(MyWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        #self.ui.predict.setText(predict_point.will())
 
         #monitor 5초마다
         thread_monitor = threading.Thread(target=self.monitors_infor)
@@ -282,9 +287,9 @@ class MyWindow(QMainWindow):
         thread_userInfo.daemon = True  # 프로그램 종료시 프로세스도 함께 종료 (백그라운드 재생 X)
         thread_userInfo.start()
 
-        #thread_userInfo = threading.Thread(target=self.csvfile_)
-        #thread_userInfo.daemon = True  # 프로그램 종료시 프로세스도 함께 종료 (백그라운드 재생 X)
-        #thread_userInfo.start()
+        self.csvfile_()
+        self.csvfile__()
+
 
 
 if __name__ == "__main__":

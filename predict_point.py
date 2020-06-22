@@ -32,9 +32,10 @@ def today_datetime_tem():
                     'max_temperature','min_temperature', 'mm', 'rain','snow','sensory_temperature',
                     'detail_dust', 'dust']
             df = pd.DataFrame(data = record ,columns=attr)
-            #print(df['aver_temperature']) #평균 기온
+            print("평균 기온")
+            print(df['aver_temperature']) #평균 기온
             return df['aver_temperature']
-            #print(df)
+            print(df)
 
     except Error as e:
         print("Error while connecting to MySQL", e)
@@ -55,8 +56,8 @@ def will():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server version ", db_Info)
             cursor = connection.cursor()
-            aver_tem_p = int(today_datetime_tem() + 2)
-            aver_tem_m = int(today_datetime_tem() - 2)
+            aver_tem_p = int(today_datetime_tem() + 3)
+            aver_tem_m = int(today_datetime_tem() - 3)
             query = f"select weather_history.date_time, weather_history.min_temperature, weather_history.max_temperature, weather_history.aver_temperature ,review_today.user_name, review_today.review_today_point from weather_history left join review_today on weather_history.date_time = review_today.today_time where weather_history.aver_temperature >= {aver_tem_m} and weather_history.aver_temperature <= {aver_tem_p};"
             cursor.execute(query)
             record = cursor.fetchall()
@@ -80,7 +81,7 @@ def will():
             point_value["hot"] = len(df[(df.review_today_point == 2) & (df.user_name == 'testkimgood')])
 
             max_key = list(point_value.keys())[list(point_value.values()).index(max(point_value.values()))]
-            result = "오늘은 " +max_key +" 이라고 느낄거라고 예상됩니다."
+            result = "오늘은 " +max_key +" 이라고 " + "\n" + "느낄거라고 예상됩니다."
             return result
 
 
@@ -111,7 +112,6 @@ def csvfile():
             attr = ['review_today_id', 'created_date', 'image_url', 'review_today_point', 'today_time', 'user_id',
                     'user_name', 'modified_date']
             df = pd.DataFrame(data=record, columns=attr)
-            print(df)
             df.to_csv('review_today.csv')
 
     except Error as e:
@@ -122,8 +122,9 @@ def csvfile():
             connection.close()
             print("MySQL connection is closed")
             csv_pngfile()
+
 def csv_pngfile():
-    import csv
+    #import csv
     # 전체 유저가 그날 어떤 감정을 느꼈는지 나타내주는 값들 다 더해주고 평균내고 하자
     df = pd.read_csv('review_today.csv')
     newrow = []
@@ -145,13 +146,7 @@ def csv_pngfile():
         cool = dayNumericalStatement[dayNumericalStatement['review_today_point'] == -1].__len__()
         cold = dayNumericalStatement[dayNumericalStatement['review_today_point'] == -2].__len__()
         sum = hot
-        print(sum)
         newrow.append(np.asarray([i, int(sum)]))
-
-    newrow.pop(0)
-    newrow.pop()
-    newrow.pop()
-    print(newrow)
 
     X = np.asanyarray(newrow)
     plt.xlabel("2020 02 ~ 2020 06")
@@ -159,3 +154,58 @@ def csv_pngfile():
     plt.title("Very Hot")
     plt.scatter(X[:, 0], X[:, 1])
     plt.savefig('foo.png', bbox_inches='tight')
+
+
+
+def weather_history_date_get():
+    try:
+        connection = mysql.connector.connect(host='34.64.124.92',
+                                             database='smartmirror',
+                                             user='smartmirror',
+                                             password='smartmirror9699!!')
+        if connection.is_connected():
+            db_Info = connection.get_server_info()
+            print("Connected to MySQL Server version ", db_Info)
+            cursor = connection.cursor()
+            # 요기 수정
+
+            cursor.execute("select * from users_feeling_percentage;")
+            # cursor.execute(query)
+            # record = cursor.fetchone()
+            record = cursor.fetchall()
+            size = record.__sizeof__()
+            datatype = record.__class__
+            # attr = ['date_time', 'created_date', 'area', 'aver_temperature', 'min_temperature', 'max_temperature',
+            #        'mm', 'rain','snow','sensory_temperature','modified_date','detail_dust','dust']
+            attr = ['date_time', 'created_date', 'modified_date', 'cold', 'cool', 'normal', 'warm', 'hot']
+
+            df = pd.DataFrame(data=record, columns=attr)
+            print(df)
+            df.to_csv('weather_history_date_get.csv')
+
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        if (connection.is_connected()):
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+
+def weather_history_date_get_grape():
+    weather_history_date_get()
+    # csv 파일 읽기
+    file3 = 'C:\\Users\\kimbh\\weather_history_date_get.csv'
+    df3 = pd.read_csv(file3)
+
+    print(df3)
+
+    # plt.plot(list_predicted_date, list_predicted_point)
+    plt.plot(df3['date_time'], df3['cold'])
+    plt.plot(df3['date_time'], df3['cool'])
+    plt.plot(df3['date_time'], df3['normal'])
+    plt.plot(df3['date_time'], df3['warm'])
+    plt.plot(df3['date_time'], df3['hot'])
+    # X=np.array(list_predicted_kMeans)
+    # plt.scatter(X[:,0],X[:,1])
+    plt.savefig('grape.png', bbox_inches='tight')
