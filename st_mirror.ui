@@ -2,96 +2,31 @@
 <ui version="4.0">
  <class>Form</class>
  <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1620</width>
+    <height>900</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="weather">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>100</y>
-     <width>50</width>
-     <height>50</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="now_temperature">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>20</y>
-     <width>70</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>현재 기온</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="now_temperature_maxmin">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>50</y>
-     <width>70</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>최저 최고</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="mask">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>10</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>마스크</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="dust">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>20</y>
-     <width>70</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>미세먼지</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="dust_ui">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>50</y>
-     <width>70</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>초미세먼지</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="one">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>20</y>
-     <width>160</width>
+     <x>440</x>
+     <y>30</y>
+     <width>250</width>
      <height>700</height>
     </rect>
    </property>
-
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
    <property name="text">
-    <string>첫번째</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -100,14 +35,17 @@
   <widget class="QLabel" name="two">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>20</y>
-     <width>130</width>
+     <x>700</x>
+     <y>30</y>
+     <width>250</width>
      <height>700</height>
     </rect>
    </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
    <property name="text">
-    <string>두번째</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -116,14 +54,17 @@
   <widget class="QLabel" name="three">
    <property name="geometry">
     <rect>
-     <x>670</x>
-     <y>20</y>
-     <width>130</width>
+     <x>960</x>
+     <y>30</y>
+     <width>250</width>
      <height>700</height>
     </rect>
    </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
    <property name="text">
-    <string>세번째</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -132,14 +73,17 @@
   <widget class="QLabel" name="four">
    <property name="geometry">
     <rect>
-     <x>810</x>
-     <y>20</y>
-     <width>130</width>
+     <x>1220</x>
+     <y>30</y>
+     <width>250</width>
      <height>700</height>
     </rect>
    </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
    <property name="text">
-    <string>네번째</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -148,77 +92,362 @@
   <widget class="QLabel" name="five">
    <property name="geometry">
     <rect>
-     <x>950</x>
-     <y>20</y>
-     <width>130</width>
+     <x>1480</x>
+     <y>30</y>
+     <width>250</width>
      <height>700</height>
     </rect>
    </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
    <property name="text">
-    <string>다섯번째</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="dateEdit">
+  <widget class="QWidget" name="verticalLayoutWidget_3">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>700</y>
-     <width>130</width>
-     <height>30</height>
+     <x>10</x>
+     <y>10</y>
+     <width>341</width>
+     <height>271</height>
     </rect>
    </property>
+   <layout class="QVBoxLayout" name="verticalLayout_5">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QLabel" name="weather">
+        <property name="text">
+         <string>마스크</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLabel" name="now_temperature">
+          <property name="font">
+           <font>
+            <family>휴먼둥근헤드라인</family>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>현재 기온</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="now_temperature_maxmin">
+          <property name="font">
+           <font>
+            <family>휴먼둥근헤드라인</family>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>최저 최고</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QLabel" name="mask">
+        <property name="text">
+         <string>마스크</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="dust">
+          <property name="font">
+           <font>
+            <family>휴먼둥근헤드라인</family>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>미세먼지</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="dust_ui">
+          <property name="font">
+           <font>
+            <family>휴먼둥근헤드라인</family>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>초미세먼지</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
-  <widget class="QLabel" name="dateEdit_2">
+  <widget class="QWidget" name="verticalLayoutWidget_4">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>700</y>
-     <width>130</width>
-     <height>30</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="dateEdit_3">
-   <property name="geometry">
-    <rect>
-     <x>670</x>
-     <y>700</y>
-     <width>130</width>
-     <height>30</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="dateEdit_4">
-   <property name="geometry">
-    <rect>
-     <x>810</x>
-     <y>700</y>
-     <width>130</width>
-     <height>30</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="dateEdit_5">
-   <property name="geometry">
-    <rect>
-     <x>950</x>
-     <y>700</y>
-     <width>130</width>
-     <height>30</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QWidget" name="widget" native="true">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>210</y>
-     <width>120</width>
+     <x>490</x>
+     <y>740</y>
+     <width>160</width>
      <height>80</height>
     </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_9">
+    <item>
+     <widget class="QLabel" name="dateEdit">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="point_1">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget_5">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>740</y>
+     <width>160</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_10">
+    <item>
+     <widget class="QLabel" name="dateEdit_2">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="point_2">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget_6">
+   <property name="geometry">
+    <rect>
+     <x>1010</x>
+     <y>740</y>
+     <width>160</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_11">
+    <item>
+     <widget class="QLabel" name="dateEdit_3">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="point_3">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget_7">
+   <property name="geometry">
+    <rect>
+     <x>1260</x>
+     <y>740</y>
+     <width>160</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_12">
+    <item>
+     <widget class="QLabel" name="dateEdit_4">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="point_4">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget_8">
+   <property name="geometry">
+    <rect>
+     <x>1520</x>
+     <y>740</y>
+     <width>160</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_13">
+    <item>
+     <widget class="QLabel" name="dateEdit_5">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="point_5">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="monitortoken">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>850</y>
+     <width>281</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>휴먼둥근헤드라인</family>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>모니터토큰</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>
