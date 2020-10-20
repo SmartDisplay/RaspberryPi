@@ -157,7 +157,7 @@ class MyWindow(QMainWindow):
                 break
             else:
                 print("안받아올 떄")
-                sleep(5)
+                threading.Timer(5, self.monitors_infor).start()
 
 
     def user_information(self):
@@ -210,41 +210,43 @@ class MyWindow(QMainWindow):
                     points = self.TodayPoint(reviewTodayPoint)
                     if aa == 0:
                         self.ui.one.setPixmap(qPixmapVar)
-                        self.ui.dateEdit.setText(createdDate[0:8])
+                        self.ui.dateEdit.setText(createdDate[0:4]+"년 " + createdDate[4:6] + "월 " + createdDate[6:8] + "일")
                         self.ui.point_1.setText(points)
                     elif aa == 1:
                         self.ui.two.setPixmap(qPixmapVar)
-                        self.ui.dateEdit_2.setText(createdDate[0:8])
+                        self.ui.dateEdit_2.setText(createdDate[0:4]+"년 " + createdDate[4:6] + "월 " + createdDate[6:8]+ "일")#self.ui.dateEdit_2.setText(createdDate[0:8])
                         self.ui.point_2.setText(points)
                     elif aa == 2:
                         self.ui.three.setPixmap(qPixmapVar)
-                        self.ui.dateEdit_3.setText(createdDate[0:8])
+                        self.ui.dateEdit_3.setText(createdDate[0:4]+"년 " + createdDate[4:6] + "월 " + createdDate[6:8]+ "일")
                         self.ui.point_3.setText(points)
                     elif aa == 3:
                         self.ui.four.setPixmap(qPixmapVar)
-                        self.ui.dateEdit_4.setText(createdDate[0:8])
+                        self.ui.dateEdit_4.setText(createdDate[0:4]+"년 " + createdDate[4:6] + "월 " + createdDate[6:8]+ "일")
                         self.ui.point_4.setText(points)
                     elif aa == 4:
                         self.ui.five.setPixmap(qPixmapVar)
-                        self.ui.dateEdit_5.setText(createdDate[0:8])
+                        self.ui.dateEdit_5.setText(createdDate[0:4]+"년 " + createdDate[4:6] + "월 " + createdDate[6:8]+ "일")
                         self.ui.point_5.setText(points)
+
                 self.weatherimage()
-            sleep(20)
+            threading.Timer(5, self.user_information).start()
 
-    def csvfile_(self):
-        self.ui.predict.setText(predict_point.will())
-        #predict_point.csvfile()
-        pixmap = QPixmap("foo.png")
-        pixmap = pixmap.scaledToWidth(200)
-        pixmap = pixmap.scaledToHeight(150)
-        self.ui.grape1.setPixmap(pixmap)
+    #def csvfile_(self):
+    #    self.ui.predict.setText(predict_point.will())
+     #   #predict_point.csvfile()
+     #   pixmap = QPixmap("foo.png")
+    #    pixmap = pixmap.scaledToWidth(200)
+    #    pixmap = pixmap.scaledToHeight(150)
+     #   self.ui.grape1.setPixmap(pixmap)
 
-    def csvfile__(self):
-       # predict_point.weather_history_date_get_grape()
-        pixmap = QPixmap("grape.png")
-        pixmap = pixmap.scaledToWidth(200)
-        pixmap = pixmap.scaledToHeight(150)
-        self.ui.grape2.setPixmap(pixmap)
+    #def csvfile__(self):
+    #   # predict_point.weather_history_date_get_grape()
+    #    pixmap = QPixmap("grape.png")
+    #    pixmap = pixmap.scaledToWidth(200)
+    #    pixmap = pixmap.scaledToHeight(150)
+     #   self.ui.grape2.setPixmap(pixmap)
+
 
     def reset(self):
 
@@ -278,17 +280,19 @@ class MyWindow(QMainWindow):
         self.ui.setupUi(self)
 
         #monitor 5초마다
-        thread_monitor = threading.Thread(target=self.monitors_infor)
-        thread_monitor.daemon = True  # 프로그램 종료시 프로세스도 함께 종료 (백그라운드 재생 X)
-        thread_monitor.start()
+        self.monitors_infor()
+        #thread_monitor = threading.Thread(target=self.monitors_infor)
+        #thread_monitor.daemon = True  # 프로그램 종료시 프로세스도 함께 종료 (백그라운드 재생 X)
+        #thread_monitor.start()
 
         #유저정보 30초마다
-        thread_userInfo = threading.Thread(target=self.user_information)
-        thread_userInfo.daemon = True  # 프로그램 종료시 프로세스도 함께 종료 (백그라운드 재생 X)
-        thread_userInfo.start()
+        self.user_information()
+        #thread_userInfo = threading.Thread(target=self.user_information)
+        #thread_userInfo.daemon = True  # 프로그램 종료시 프로세스도 함께 종료 (백그라운드 재생 X)
+        #thread_userInfo.start()
 
-        self.csvfile_()
-        self.csvfile__()
+        #self.csvfile_()
+        #self.csvfile__()
 
 
 
