@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1620</width>
+    <width>1761</width>
     <height>900</height>
    </rect>
   </property>
@@ -16,8 +16,8 @@
   <widget class="QLabel" name="one">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>30</y>
+     <x>460</x>
+     <y>120</y>
      <width>250</width>
      <height>700</height>
     </rect>
@@ -35,8 +35,8 @@
   <widget class="QLabel" name="two">
    <property name="geometry">
     <rect>
-     <x>700</x>
-     <y>30</y>
+     <x>720</x>
+     <y>120</y>
      <width>250</width>
      <height>700</height>
     </rect>
@@ -54,8 +54,8 @@
   <widget class="QLabel" name="three">
    <property name="geometry">
     <rect>
-     <x>960</x>
-     <y>30</y>
+     <x>980</x>
+     <y>120</y>
      <width>250</width>
      <height>700</height>
     </rect>
@@ -73,8 +73,8 @@
   <widget class="QLabel" name="four">
    <property name="geometry">
     <rect>
-     <x>1220</x>
-     <y>30</y>
+     <x>1240</x>
+     <y>120</y>
      <width>250</width>
      <height>700</height>
     </rect>
@@ -92,8 +92,8 @@
   <widget class="QLabel" name="five">
    <property name="geometry">
     <rect>
-     <x>1480</x>
-     <y>30</y>
+     <x>1500</x>
+     <y>120</y>
      <width>250</width>
      <height>700</height>
     </rect>
@@ -211,9 +211,9 @@
   <widget class="QWidget" name="verticalLayoutWidget_4">
    <property name="geometry">
     <rect>
-     <x>490</x>
-     <y>740</y>
-     <width>160</width>
+     <x>481</x>
+     <y>30</y>
+     <width>201</width>
      <height>80</height>
     </rect>
    </property>
@@ -223,7 +223,7 @@
       <property name="font">
        <font>
         <family>휴먼둥근헤드라인</family>
-        <pointsize>15</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="text">
@@ -256,8 +256,8 @@
    <property name="geometry">
     <rect>
      <x>740</x>
-     <y>740</y>
-     <width>160</width>
+     <y>30</y>
+     <width>201</width>
      <height>80</height>
     </rect>
    </property>
@@ -267,7 +267,7 @@
       <property name="font">
        <font>
         <family>휴먼둥근헤드라인</family>
-        <pointsize>15</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="text">
@@ -299,9 +299,9 @@
   <widget class="QWidget" name="verticalLayoutWidget_6">
    <property name="geometry">
     <rect>
-     <x>1010</x>
-     <y>740</y>
-     <width>160</width>
+     <x>1000</x>
+     <y>30</y>
+     <width>201</width>
      <height>80</height>
     </rect>
    </property>
@@ -311,7 +311,7 @@
       <property name="font">
        <font>
         <family>휴먼둥근헤드라인</family>
-        <pointsize>15</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="text">
@@ -344,8 +344,8 @@
    <property name="geometry">
     <rect>
      <x>1260</x>
-     <y>740</y>
-     <width>160</width>
+     <y>30</y>
+     <width>201</width>
      <height>80</height>
     </rect>
    </property>
@@ -355,7 +355,7 @@
       <property name="font">
        <font>
         <family>휴먼둥근헤드라인</family>
-        <pointsize>15</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="text">
@@ -388,8 +388,8 @@
    <property name="geometry">
     <rect>
      <x>1520</x>
-     <y>740</y>
-     <width>160</width>
+     <y>30</y>
+     <width>201</width>
      <height>80</height>
     </rect>
    </property>
@@ -399,7 +399,7 @@
       <property name="font">
        <font>
         <family>휴먼둥근헤드라인</family>
-        <pointsize>15</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="text">
@@ -455,14 +455,14 @@
     <rect>
      <x>20</x>
      <y>310</y>
-     <width>321</width>
+     <width>341</width>
      <height>111</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>휴먼둥근헤드라인</family>
-     <pointsize>15</pointsize>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">
@@ -472,32 +472,72 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget">
+  <widget class="QWidget" name="verticalLayoutWidget_9">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>430</y>
-     <width>331</width>
-     <height>141</height>
+     <x>370</x>
+     <y>30</y>
+     <width>91</width>
+     <height>80</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_14">
     <item>
-     <widget class="QLabel" name="grape1">
+     <widget class="QLabel" name="dateEdit_6">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>날짜</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="grape2">
+     <widget class="QLabel" name="point_6">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>평가</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
+  <zorder>one</zorder>
+  <zorder>two</zorder>
+  <zorder>three</zorder>
+  <zorder>four</zorder>
+  <zorder>five</zorder>
+  <zorder>verticalLayoutWidget_3</zorder>
+  <zorder>verticalLayoutWidget_4</zorder>
+  <zorder>verticalLayoutWidget_5</zorder>
+  <zorder>verticalLayoutWidget_6</zorder>
+  <zorder>verticalLayoutWidget_7</zorder>
+  <zorder>verticalLayoutWidget_8</zorder>
+  <zorder>monitortoken</zorder>
+  <zorder>predict</zorder>
+  <zorder>verticalLayoutWidget_9</zorder>
+  <zorder>point_1</zorder>
+  <zorder>dateEdit_3</zorder>
+  <zorder>point_4</zorder>
+  <zorder>point_3</zorder>
+  <zorder>dateEdit_4</zorder>
+  <zorder>point_5</zorder>
+  <zorder>dateEdit_5</zorder>
+  <zorder>dateEdit</zorder>
  </widget>
  <resources/>
  <connections/>
