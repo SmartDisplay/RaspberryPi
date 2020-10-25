@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 import mysql as mysql
 import numpy as np
@@ -8,15 +7,20 @@ from mysql.connector import Error
 
 ##필요 -> ##
 from datetime import datetime
+
 def today_datetime_tem():
     today_datetime = datetime.today().strftime("%Y%m%d")    # YYYYmmddHHMMSS 형태
     print(today_datetime)
 
     try:
-        connection = mysql.connector.connect(host='34.64.124.92',
+        #connection = mysql.connector.connect(host='34.64.124.92',
+        #                                     database='smartmirror',
+        #                                     user='smartmirror',
+        #                                     password='smartmirror9699!!')
+        connection = mysql.connector.connect(host='smartmirror.sewingfactory.shop',
                                              database='smartmirror',
                                              user='smartmirror',
-                                             password='smartmirror9699!!')
+                                             password='q1w2e3r4!!')
         if connection.is_connected():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server version ", db_Info)
@@ -48,10 +52,10 @@ def today_datetime_tem():
 def will():
 
     try:
-        connection = mysql.connector.connect(host='34.64.124.92',
+        connection = mysql.connector.connect(host='smartmirror.sewingfactory.shop',
                                              database='smartmirror',
                                              user='smartmirror',
-                                             password='smartmirror9699!!')
+                                             password='q1w2e3r4!!')
         if connection.is_connected():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server version ", db_Info)
@@ -81,7 +85,32 @@ def will():
             point_value["hot"] = len(df[(df.review_today_point == 2) & (df.user_name == 'testkimgood')])
 
             max_key = list(point_value.keys())[list(point_value.values()).index(max(point_value.values()))]
-            result = "오늘은 " +max_key +" 이라고 " + "\n" + "느낄거라고 예상됩니다."
+
+            today_datetime = datetime.today().strftime("%Y%m%d")  # YYYYmmddHHMMSS 형태
+            today_datetimes = int(today_datetime[4:6])
+            print("월 : " + str(today_datetimes))
+            today_mon = ""
+            if (today_datetimes>=3 and today_datetimes<=5 and max_key == "cold"): #봄
+                today_mon += "추움이라"
+            elif (today_datetimes>=3 and today_datetimes<=5 and max_key == "hot"): #봄
+                today_mon += "더움이라"
+            elif (today_datetimes>=6 and today_datetimes<=8 and max_key == "hot"): #봄
+                today_mon += "매우 더움이라"
+            elif (today_datetimes>=6 and today_datetimes<=8 and max_key == "hot"): #봄
+                today_mon += "덜 더움이라"
+            elif (today_datetimes>=9 and today_datetimes<=11 and max_key == "normal"): #봄
+                today_mon += "약간 더움이라"
+            elif (today_datetimes>=9 and today_datetimes<=11 and max_key == "hot"): #봄
+                today_mon += "견딜만한 더움이라"
+            elif (today_datetimes>=9 and today_datetimes<=11 and max_key == "cool"): #봄
+                today_mon += "약간 추움이라"
+            elif ((today_datetimes==12 or today_datetimes==1 or today_datetimes==2)  and max_key == "cold"): #봄
+                today_mon += "매우 추움이라"
+            elif ((today_datetimes==12 or today_datetimes==1 or today_datetimes==2)  and max_key == "normal"): #봄
+                today_mon += "따뜻함이라."
+            elif ((today_datetimes==12 or today_datetimes==1 or today_datetimes==2)  and max_key == "cool"): #봄
+                today_mon += "견딜만한 추움이라."
+            result = "오늘은 " +max_key +" 이라 " + today_mon + "\n" + "느낄거라고 예상됩니다."
             return result
 
 
