@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1761</width>
+    <width>1870</width>
     <height>900</height>
    </rect>
   </property>
@@ -16,7 +16,7 @@
   <widget class="QLabel" name="one">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>510</x>
      <y>120</y>
      <width>250</width>
      <height>700</height>
@@ -35,7 +35,7 @@
   <widget class="QLabel" name="two">
    <property name="geometry">
     <rect>
-     <x>720</x>
+     <x>770</x>
      <y>120</y>
      <width>250</width>
      <height>700</height>
@@ -54,7 +54,7 @@
   <widget class="QLabel" name="three">
    <property name="geometry">
     <rect>
-     <x>980</x>
+     <x>1030</x>
      <y>120</y>
      <width>250</width>
      <height>700</height>
@@ -73,7 +73,7 @@
   <widget class="QLabel" name="four">
    <property name="geometry">
     <rect>
-     <x>1240</x>
+     <x>1290</x>
      <y>120</y>
      <width>250</width>
      <height>700</height>
@@ -92,7 +92,7 @@
   <widget class="QLabel" name="five">
    <property name="geometry">
     <rect>
-     <x>1500</x>
+     <x>1550</x>
      <y>120</y>
      <width>250</width>
      <height>700</height>
@@ -211,7 +211,7 @@
   <widget class="QWidget" name="verticalLayoutWidget_4">
    <property name="geometry">
     <rect>
-     <x>481</x>
+     <x>531</x>
      <y>30</y>
      <width>201</width>
      <height>80</height>
@@ -255,7 +255,7 @@
   <widget class="QWidget" name="verticalLayoutWidget_5">
    <property name="geometry">
     <rect>
-     <x>740</x>
+     <x>790</x>
      <y>30</y>
      <width>201</width>
      <height>80</height>
@@ -299,7 +299,7 @@
   <widget class="QWidget" name="verticalLayoutWidget_6">
    <property name="geometry">
     <rect>
-     <x>1000</x>
+     <x>1050</x>
      <y>30</y>
      <width>201</width>
      <height>80</height>
@@ -343,7 +343,7 @@
   <widget class="QWidget" name="verticalLayoutWidget_7">
    <property name="geometry">
     <rect>
-     <x>1260</x>
+     <x>1310</x>
      <y>30</y>
      <width>201</width>
      <height>80</height>
@@ -387,7 +387,7 @@
   <widget class="QWidget" name="verticalLayoutWidget_8">
    <property name="geometry">
     <rect>
-     <x>1520</x>
+     <x>1570</x>
      <y>30</y>
      <width>201</width>
      <height>80</height>
@@ -475,7 +475,7 @@
   <widget class="QWidget" name="verticalLayoutWidget_9">
    <property name="geometry">
     <rect>
-     <x>370</x>
+     <x>420</x>
      <y>30</y>
      <width>91</width>
      <height>80</height>
@@ -487,7 +487,7 @@
       <property name="font">
        <font>
         <family>휴먼둥근헤드라인</family>
-        <pointsize>15</pointsize>
+        <pointsize>13</pointsize>
        </font>
       </property>
       <property name="text">
@@ -503,7 +503,7 @@
       <property name="font">
        <font>
         <family>휴먼둥근헤드라인</family>
-        <pointsize>15</pointsize>
+        <pointsize>13</pointsize>
        </font>
       </property>
       <property name="text">
@@ -516,28 +516,6 @@
     </item>
    </layout>
   </widget>
-  <zorder>one</zorder>
-  <zorder>two</zorder>
-  <zorder>three</zorder>
-  <zorder>four</zorder>
-  <zorder>five</zorder>
-  <zorder>verticalLayoutWidget_3</zorder>
-  <zorder>verticalLayoutWidget_4</zorder>
-  <zorder>verticalLayoutWidget_5</zorder>
-  <zorder>verticalLayoutWidget_6</zorder>
-  <zorder>verticalLayoutWidget_7</zorder>
-  <zorder>verticalLayoutWidget_8</zorder>
-  <zorder>monitortoken</zorder>
-  <zorder>predict</zorder>
-  <zorder>verticalLayoutWidget_9</zorder>
-  <zorder>point_1</zorder>
-  <zorder>dateEdit_3</zorder>
-  <zorder>point_4</zorder>
-  <zorder>point_3</zorder>
-  <zorder>dateEdit_4</zorder>
-  <zorder>point_5</zorder>
-  <zorder>dateEdit_5</zorder>
-  <zorder>dateEdit</zorder>
  </widget>
  <resources/>
  <connections/>
