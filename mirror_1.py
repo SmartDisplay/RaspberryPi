@@ -1,310 +1,240 @@
-import json
-import sys
-import threading
-import urllib.request
+import matplotlib.pyplot as plt
+import mysql as mysql
+import numpy as np
+import pandas as pd
 
-import requests
-import urllib3
-import csv
+from mysql.connector import Error
 
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-from PyQt5 import uic, QtCore
-from PyQt5.uic.properties import QtGui
-from time import sleep
-import predict_point
+##필요 -> ##
+from datetime import datetime
 
-Ui_MainWindow, QtBaseClass = uic.loadUiType("st_mirror.ui")
+def today_datetime_tem():
+    today_datetime = datetime.today().strftime("%Y%m%d")    # YYYYmmddHHMMSS 형태
+    print(today_datetime)
 
-class MyWindow(QMainWindow):
+    try:
+        #connection = mysql.connector.connect(host='34.64.124.92',
+        #                                     database='smartmirror',
+        #                                     user='smartmirror',
+        #                                     password='smartmirror9699!!')
+        connection = mysql.connector.connect(host='smartmirror.sewingfactory.shop',
+                                             database='smartmirror',
+                                             user='smartmirror',
+                                             password='q1w2e3r4!!')
+        if connection.is_connected():
+            db_Info = connection.get_server_info()
+            print("Connected to MySQL Server version ", db_Info)
+            cursor = connection.cursor()
+            query = f"select * from weather_history where date_time like '{today_datetime}';"
+            cursor.execute(query)
+            # record = cursor.fetchone()
+            record = cursor.fetchall()
+            # print("You're connected to database: ", record)
+            size = record.__sizeof__()
+            datatype = record.__class__
+            attr = ['date_time', 'created_date', 'modified_date', 'area', 'aver_temperature',
+                    'max_temperature','min_temperature', 'mm', 'rain','snow','sensory_temperature',
+                    'detail_dust', 'dust']
+            df = pd.DataFrame(data = record ,columns=attr)
+            print("평균 기온")
+            print(df['aver_temperature']) #평균 기온
+            return df['aver_temperature']
+            print(df)
 
-    def TodayPoint(self, point):
-        points = ""
-        if point == -2:
-            points = "매우 추움"
-        elif point == -1:
-            points = "추움"
-        elif point == 0:
-            points = "보통"
-        elif point == 1:
-            points = "더움"
-        elif point == 2:
-            points = "매우더움"
-        return points
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        if (connection.is_connected()):
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
 
-    def dust_check(self,dust):
-        if dust == "좋음":
-            return "good"
-        elif dust == "보통":
-            return "so"
-        elif dust == "나쁨":
-            return "bed"
+def will():
 
-    def weatherimage(self):
-        URL = 'https://smartmirror.sewingfactory.shop/api/v1/getToday'
-        response = requests.get(URL)
-        print(response.content)
-        json_data = json.loads(response.content)
-        rain = json_data['rain']
-        snow = json_data['snow']
-        maxTemperature = json_data['maxTemperature']
-        minTemperature = json_data['minTemperature']
-        self.ui.now_temperature.setText("최대 : "+ str(maxTemperature))
-        self.ui.now_temperature_maxmin.setText("최소 : "+str(minTemperature))
-        dust = json_data['dust']
-        detailDust = json_data['detailDust']
-        self.ui.dust.setText("미세먼지 : "+ str(dust))
-        self.ui.dust_ui.setText("초미세먼지 : "+str(detailDust))
+    try:
+        connection = mysql.connector.connect(host='smartmirror.sewingfactory.shop',
+                                             database='smartmirror',
+                                             user='smartmirror',
+                                             password='q1w2e3r4!!')
+        if connection.is_connected():
+            db_Info = connection.get_server_info()
+            print("Connected to MySQL Server version ", db_Info)
+            cursor = connection.cursor()
+            aver_tem_p = int(today_datetime_tem() + 3)
+            aver_tem_m = int(today_datetime_tem() - 3)
+            query = f"select weather_history.date_time, weather_history.min_temperature, weather_history.max_temperature, weather_history.aver_temperature ,review_today.user_name, review_today.review_today_point from weather_history left join review_today on weather_history.date_time = review_today.today_time where weather_history.aver_temperature >= {aver_tem_m} and weather_history.aver_temperature <= {aver_tem_p};"
+            cursor.execute(query)
+            record = cursor.fetchall()
+            size = record.__sizeof__()
+            datatype = record.__class__
+            attr = ['date_time', 'min_temperature', 'max_temperature', 'aver_temperature', 'user_name',
+                    'review_today_point']
+            df = pd.DataFrame(data=record, columns=attr)
+            # 사용자의 이름 필요
+            # 사용자가 비슷한 온도에 point한 것들 필요
+            # 그 point가 각각 몇 개 있는지 구하기
+            # 가장 비율이 높은 것 찾기
+            # 그 비율이 높은 것으로 오늘 point 예측
 
-        dust_string = self.dust_check(dust)
-        dustdetail_string = self.dust_check(detailDust)
-        dust_full = dust_string + dustdetail_string + ".png"
-        print("dust_full : "+ dust_full)
-        pixmap = QPixmap(dust_full)
-        pixmap = pixmap.scaledToWidth(50)
-        pixmap = pixmap.scaledToHeight(50)
-        self.ui.mask.setPixmap(QPixmap(pixmap))
+            point_value = dict()
 
-        if (rain is False and snow is False):
-            pixmap = QPixmap("sun.png")
-            pixmap = pixmap.scaledToWidth(150)
-            pixmap = pixmap.scaledToHeight(150)
-            self.ui.weather.setPixmap(pixmap)
-            print("해")
-        elif (rain is True and snow is False):
-            pixmap = QPixmap("rain.png")
-            pixmap = pixmap.scaledToWidth(150)
-            pixmap = pixmap.scaledToHeight(150)
-            self.ui.weather.setPixmap(QPixmap(pixmap))
-            print("비")
-        elif (rain is False and snow is True):
-            pixmap = QPixmap("snow.png")
-            pixmap = pixmap.scaledToWidth(150)
-            pixmap = pixmap.scaledToHeight(150)
-            self.ui.weather.setPixmap(QPixmap(pixmap))
-            print("눈")
-        else:
-            print("모른닷")
+            point_value["cold"] = len(df[(df.review_today_point == -2) & (df.user_name == 'testkimgood')])
+            point_value["cool"] = len(df[(df.review_today_point == -1) & (df.user_name == 'testkimgood')])
+            point_value["normal"] = len(df[(df.review_today_point == 0) & (df.user_name == 'testkimgood')])
+            point_value["warm"] = len(df[(df.review_today_point == 1) & (df.user_name == 'testkimgood')])
+            point_value["hot"] = len(df[(df.review_today_point == 2) & (df.user_name == 'testkimgood')])
 
-    def monitortoken(self):
-        fr = open('output.csv', 'r', encoding='utf-8', newline='')
-        rdr = csv.reader(fr)
-        eh = ""
-        for v in rdr:
-            print(v[1])
-            eh = v[1]
-        fr.close()
-        return eh
+            max_key = list(point_value.keys())[list(point_value.values()).index(max(point_value.values()))]
 
-    def userId(self):
-        eh = self.monitortoken()
-        if eh == "":
-            URL = 'https://smartmirror.sewingfactory.shop/api/v1/getMonitorToken'
-            response = requests.get(URL)
-            print(str(response.content))
-            f = open('oprintitutput.csv', 'w', encoding='utf-8', newline='')
-            wr = csv.writer(f)
-            wr.writerow([0, response.content.decode('utf-8')])
-            f.close()
-        params = """
-                                           {
-                                               "monitorToken" : """ + "\"" + eh + "\"" + """
-                                               }
-                                           """
-        print(params)
-
-        url = 'https://smartmirror.sewingfactory.shop/api/v1/getMonitorsUserId'
-        headers = {'Content-Type': 'application/json; charset=utf-8'}
-        response = requests.post(url=url, data=params, headers=headers)
-        print("어때? : " + str(response))
-
-        print("뭐뭐 출력해줘 : " + str(response.content.decode('utf-8')))
-
-        if (str(response.content) is not None):
-            print("값을 잘 받아올 때")
-            self.ui.monitortoken.setText("일련번호 : " + eh)
-            return str(response.content.decode('utf-8'))
-        else:
-            print("안받아올 떄")
+            today_datetime = datetime.today().strftime("%Y%m%d")  # YYYYmmddHHMMSS 형태
+            today_datetimes = int(today_datetime[4:6])
+            print("월 : " + str(today_datetimes))
+            today_mon = ""
+            if (today_datetimes>=3 and today_datetimes<=5 and max_key == "cold"): #봄
+                today_mon += "추움이라"
+            elif (today_datetimes>=3 and today_datetimes<=5 and max_key == "hot"): #봄
+                today_mon += "더움이라"
+            elif (today_datetimes>=6 and today_datetimes<=8 and max_key == "hot"): #봄
+                today_mon += "매우 더움이라"
+            elif (today_datetimes>=6 and today_datetimes<=8 and max_key == "hot"): #봄
+                today_mon += "덜 더움이라"
+            elif (today_datetimes>=9 and today_datetimes<=11 and max_key == "normal"): #봄
+                today_mon += "약간 더움이라"
+            elif (today_datetimes>=9 and today_datetimes<=11 and max_key == "hot"): #봄
+                today_mon += "견딜만한 더움이라"
+            elif (today_datetimes>=9 and today_datetimes<=11 and max_key == "cool"): #봄
+                today_mon += "약간 추움이라"
+            elif ((today_datetimes==12 or today_datetimes==1 or today_datetimes==2)  and max_key == "cold"): #봄
+                today_mon += "매우 추움이라"
+            elif ((today_datetimes==12 or today_datetimes==1 or today_datetimes==2)  and max_key == "normal"): #봄
+                today_mon += "따뜻함이라."
+            elif ((today_datetimes==12 or today_datetimes==1 or today_datetimes==2)  and max_key == "cool"): #봄
+                today_mon += "견딜만한 추움이라."
+            result = "오늘은 " +max_key +" 이라 " + today_mon + "\n" + "느낄거라고 예상됩니다."
+            return result
 
 
-    def monitors_infor(self):
-        while True:
-            print("monitor")
-            eh = self.monitortoken()
-            if eh == "":
-                URL = 'https://smartmirror.sewingfactory.shop/api/v1/getMonitorToken'
-                response = requests.get(URL)
-                print(str(response.content))
-                f = open('oprintitutput.csv', 'w', encoding='utf-8', newline='')
-                wr = csv.writer(f)
-                wr.writerow([0, response.content.decode('utf-8')])
-                f.close()
-            params = """
-                                   {
-                                       "monitorToken" : """ + "\"" + eh + "\"" + """
-                                       }
-                                   """
-            print(params)
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        if (connection.is_connected()):
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
 
-            url = 'https://smartmirror.sewingfactory.shop/api/v1/getMonitorsUserId'
-            headers = {'Content-Type': 'application/json; charset=utf-8'}
-            response = requests.post(url=url, data=params, headers=headers)
+def csvfile():
+    try:
+        connection = mysql.connector.connect(host='34.64.124.92',
+                                             database='smartmirror',
+                                             user='smartmirror',
+                                             password='smartmirror9699!!')
+        if connection.is_connected():
+            db_Info = connection.get_server_info()
+            print("Connected to MySQL Server version ", db_Info)
+            cursor = connection.cursor()
+            cursor.execute("select * from review_today;")
+            # record = cursor.fetchone()
+            record = cursor.fetchall()
+            # print("You're connected to database: ", record)
+            size = record.__sizeof__()
+            datatype = record.__class__
+            attr = ['review_today_id', 'created_date', 'image_url', 'review_today_point', 'today_time', 'user_id',
+                    'user_name', 'modified_date']
+            df = pd.DataFrame(data=record, columns=attr)
+            df.to_csv('review_today.csv')
 
-            if (str(response.content) is not None):
-                print("값을 잘 받아올 때")
-                self.ui.monitortoken.setText("토큰 : " + eh)
-                break
-            else:
-                print("안받아올 떄")
-                threading.Timer(5, self.monitors_infor).start()
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        if (connection.is_connected()):
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+            csv_pngfile()
 
+def csv_pngfile():
+    #import csv
+    # 전체 유저가 그날 어떤 감정을 느꼈는지 나타내주는 값들 다 더해주고 평균내고 하자
+    df = pd.read_csv('review_today.csv')
+    newrow = []
+    hot = 0
+    warm = 0
+    normal = 0
+    cool = 0
+    cold = 0
+    sum = 0
+    date_list = set(df['today_time'].sort_values(ascending=True))
+    date_list = sorted(date_list)
+    print(date_list)
+    for i in date_list:
+        dayNumericalStatement = df[df['today_time'] == i]
+        # print("오늘의 리뷰 개수 " + str(dayNumericalStatement.__len__()))
+        hot = dayNumericalStatement[dayNumericalStatement['review_today_point'] == 2].__len__()
+        warm = dayNumericalStatement[dayNumericalStatement['review_today_point'] == 1].__len__()
+        normal = dayNumericalStatement[dayNumericalStatement['review_today_point'] == 0].__len__()
+        cool = dayNumericalStatement[dayNumericalStatement['review_today_point'] == -1].__len__()
+        cold = dayNumericalStatement[dayNumericalStatement['review_today_point'] == -2].__len__()
+        sum = hot
+        newrow.append(np.asarray([i, int(sum)]))
 
-    def user_information(self):
-        #유저 정보 게속 받아오기
-        while True:
-            monitor = self.monitortoken()
-            userid = self.userId()
-            if monitor == "":
-                print("공백")
-            else:
-                print("유저정보 30초마다")
-
-                params = """
-                                {
-                                    "userBlueToothAddr" : "abcdef",
-                                    "monitorToken" : """ + "\"" + monitor + "\"" + """, 
-                                    "userId" : """ + userid + """
-                                    }
-                                """
-
-                print(params)
-
-                url = 'https://smartmirror.sewingfactory.shop/api/v1/getWeathersSimilarFiveDaysAgo'
-                headers = {'Content-Type': 'application/json; charset=utf-8'}
-                response = requests.post(url=url, data=params, headers=headers)
-                #print("json 값 : " + response.content())
-                a = list()
-                for i in response.json():
-                    if i is None:
-                        print("None이다")
-                    else:
-                        a.append(i)
-                        print(i)
-                print(a)
-                print(a.__len__())
-                print(a[0]['userName'])
-
-                #image 지우기
-                self.reset()
-                for aa in range(a.__len__()):
-                    urlString = a[aa]['imageUrl']
-                    createdDate = a[aa]['todayTime']
-                    reviewTodayPoint = a[aa]['reviewTodayPoint']
-                    imageFromWeb = urllib.request.urlopen(urlString).read()
-                    qPixmapVar = QPixmap()
-                    qPixmapVar.loadFromData(imageFromWeb)
-                    qPixmapVar = qPixmapVar.scaledToWidth(250)
-                    qPixmapVar = qPixmapVar.scaledToHeight(700)
-
-                    points = self.TodayPoint(reviewTodayPoint)
-                    if aa == 0:
-                        self.ui.one.setPixmap(qPixmapVar)
-                        self.ui.dateEdit.setText(createdDate[0:4]+"년 " + createdDate[4:6] + "월 " + createdDate[6:8] + "일")
-                        self.ui.point_1.setText(points)
-                    elif aa == 1:
-                        self.ui.two.setPixmap(qPixmapVar)
-                        self.ui.dateEdit_2.setText(createdDate[0:4]+"년 " + createdDate[4:6] + "월 " + createdDate[6:8]+ "일")#self.ui.dateEdit_2.setText(createdDate[0:8])
-                        self.ui.point_2.setText(points)
-                    elif aa == 2:
-                        self.ui.three.setPixmap(qPixmapVar)
-                        self.ui.dateEdit_3.setText(createdDate[0:4]+"년 " + createdDate[4:6] + "월 " + createdDate[6:8]+ "일")
-                        self.ui.point_3.setText(points)
-                    elif aa == 3:
-                        self.ui.four.setPixmap(qPixmapVar)
-                        self.ui.dateEdit_4.setText(createdDate[0:4]+"년 " + createdDate[4:6] + "월 " + createdDate[6:8]+ "일")
-                        self.ui.point_4.setText(points)
-                    elif aa == 4:
-                        self.ui.five.setPixmap(qPixmapVar)
-                        self.ui.dateEdit_5.setText(createdDate[0:4]+"년 " + createdDate[4:6] + "월 " + createdDate[6:8]+ "일")
-                        self.ui.point_5.setText(points)
-
-                self.weatherimage()
-            threading.Timer(5, self.user_information).start()
-
-    #def csvfile_(self):
-    #    self.ui.predict.setText(predict_point.will())
-     #   #predict_point.csvfile()
-     #   pixmap = QPixmap("foo.png")
-    #    pixmap = pixmap.scaledToWidth(200)
-    #    pixmap = pixmap.scaledToHeight(150)
-     #   self.ui.grape1.setPixmap(pixmap)
-
-    #def csvfile__(self):
-    #   # predict_point.weather_history_date_get_grape()
-    #    pixmap = QPixmap("grape.png")
-    #    pixmap = pixmap.scaledToWidth(200)
-    #    pixmap = pixmap.scaledToHeight(150)
-     #   self.ui.grape2.setPixmap(pixmap)
-
-
-    def reset(self):
-
-        qPixmapVar = QPixmap("")
-        qPixmapVar = qPixmapVar.scaledToWidth(250)
-        qPixmapVar = qPixmapVar.scaledToHeight(700)
-
-        self.ui.one.setPixmap(qPixmapVar)
-        self.ui.dateEdit.setText("")
-        self.ui.point_1.setText("")
-
-        self.ui.two.setPixmap(qPixmapVar)
-        self.ui.dateEdit_2.setText("")
-        self.ui.point_2.setText("")
-
-        self.ui.three.setPixmap(qPixmapVar)
-        self.ui.dateEdit_3.setText("")
-        self.ui.point_3.setText("")
-
-        self.ui.four.setPixmap(qPixmapVar)
-        self.ui.dateEdit_4.setText("")
-        self.ui.point_4.setText("")
-
-        self.ui.five.setPixmap(qPixmapVar)
-        self.ui.dateEdit_5.setText("")
-        self.ui.point_5.setText("")
-
-    def __init__(self):
-        super(MyWindow, self).__init__()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-
-        #monitor 5초마다
-        self.monitors_infor()
-        #thread_monitor = threading.Thread(target=self.monitors_infor)
-        #thread_monitor.daemon = True  # 프로그램 종료시 프로세스도 함께 종료 (백그라운드 재생 X)
-        #thread_monitor.start()
-
-        #유저정보 30초마다
-        self.user_information()
-        #thread_userInfo = threading.Thread(target=self.user_information)
-        #thread_userInfo.daemon = True  # 프로그램 종료시 프로세스도 함께 종료 (백그라운드 재생 X)
-        #thread_userInfo.start()
-
-        #self.csvfile_()
-        #self.csvfile__()
+    X = np.asanyarray(newrow)
+    plt.xlabel("2020 02 ~ 2020 06")
+    plt.ylabel("Very Hot")
+    plt.title("Very Hot")
+    plt.scatter(X[:, 0], X[:, 1])
+    plt.savefig('foo.png', bbox_inches='tight')
 
 
 
-if __name__ == "__main__":
-            app = QApplication(sys.argv)
-            window = MyWindow()
-            window.show()
-            oimage = QImage("backgroundimage.png")
+def weather_history_date_get():
+    try:
+        connection = mysql.connector.connect(host='34.64.124.92',
+                                             database='smartmirror',
+                                             user='smartmirror',
+                                             password='smartmirror9699!!')
+        if connection.is_connected():
+            db_Info = connection.get_server_info()
+            print("Connected to MySQL Server version ", db_Info)
+            cursor = connection.cursor()
+            # 요기 수정
 
-            palette = QPalette()
-            palette.setBrush(10, QBrush(oimage))
-            window.setPalette(palette)
+            cursor.execute("select * from users_feeling_percentage;")
+            # cursor.execute(query)
+            # record = cursor.fetchone()
+            record = cursor.fetchall()
+            size = record.__sizeof__()
+            datatype = record.__class__
+            # attr = ['date_time', 'created_date', 'area', 'aver_temperature', 'min_temperature', 'max_temperature',
+            #        'mm', 'rain','snow','sensory_temperature','modified_date','detail_dust','dust']
+            attr = ['date_time', 'created_date', 'modified_date', 'cold', 'cool', 'normal', 'warm', 'hot']
 
-            window.showFullScreen()
-            app.exec_()
+            df = pd.DataFrame(data=record, columns=attr)
+            print(df)
+            df.to_csv('weather_history_date_get.csv')
+
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        if (connection.is_connected()):
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+
+def weather_history_date_get_grape():
+    weather_history_date_get()
+    # csv 파일 읽기
+    file3 = 'C:\\Users\\kimbh\\weather_history_date_get.csv'
+    df3 = pd.read_csv(file3)
+
+    print(df3)
+
+    # plt.plot(list_predicted_date, list_predicted_point)
+    plt.plot(df3['date_time'], df3['cold'])
+    plt.plot(df3['date_time'], df3['cool'])
+    plt.plot(df3['date_time'], df3['normal'])
+    plt.plot(df3['date_time'], df3['warm'])
+    plt.plot(df3['date_time'], df3['hot'])
+    # X=np.array(list_predicted_kMeans)
+    # plt.scatter(X[:,0],X[:,1])
+    plt.savefig('grape.png', bbox_inches='tight')
